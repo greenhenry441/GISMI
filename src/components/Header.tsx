@@ -35,6 +35,7 @@ export function Header() {
           <NavLink to="/builder">Builder</NavLink>
           {email && <NavLink to="/my-maps">My Maps</NavLink>}
           <NavLink to="/about">About</NavLink>
+          <NavLink to="/changelog">Changelog</NavLink>
         </nav>
         <div className="flex items-center gap-2">
           {email ? (
