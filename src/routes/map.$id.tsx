@@ -38,7 +38,7 @@ function ViewSavedMap() {
   const { data: m } = useSuspenseQuery(mapQuery(id));
   if (!m) return <NotFound />;
 
-  const fc = m.geojson as GeoJSON.FeatureCollection;
+  const fc = m.geojson as unknown as GeoJSON.FeatureCollection;
   const downloadGeoJSON = () => downloadFile(`${m.title}.geojson`, JSON.stringify(fc, null, 2), "application/geo+json");
   const downloadKML = () => downloadFile(`${m.title}.kml`, geojsonToKml(fc, m.title), "application/vnd.google-earth.kml+xml");
 

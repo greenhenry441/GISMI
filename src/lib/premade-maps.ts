@@ -1,3 +1,4 @@
+/// <reference types="geojson" />
 // Premade Michigan map collections. Each is a FeatureCollection plus display metadata.
 export type PremadeMap = {
   slug: string;

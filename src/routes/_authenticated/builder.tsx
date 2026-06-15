@@ -46,7 +46,7 @@ function Builder() {
         setDescription(m.description ?? "");
         setCategory(m.category ?? "");
         setIsPublic(m.is_public);
-        setFc(m.geojson as GeoJSON.FeatureCollection);
+        setFc(m.geojson as unknown as GeoJSON.FeatureCollection);
         setCenter([m.center_lat, m.center_lng]);
         setZoom(m.zoom);
       }
