@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -22,6 +23,11 @@ import { Route as AuthenticatedBuilderRouteImport } from './routes/_authenticate
 const ExploreRoute = ExploreRouteImport.update({
   id: '/explore',
   path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChangelogRoute = ChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/changelog': typeof ChangelogRoute
   '/explore': typeof ExploreRoute
   '/builder': typeof AuthenticatedBuilderRoute
   '/my-maps': typeof AuthenticatedMyMapsRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/changelog': typeof ChangelogRoute
   '/explore': typeof ExploreRoute
   '/builder': typeof AuthenticatedBuilderRoute
   '/my-maps': typeof AuthenticatedMyMapsRoute
@@ -90,6 +98,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/changelog': typeof ChangelogRoute
   '/explore': typeof ExploreRoute
   '/_authenticated/builder': typeof AuthenticatedBuilderRoute
   '/_authenticated/my-maps': typeof AuthenticatedMyMapsRoute
@@ -102,6 +111,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/changelog'
     | '/explore'
     | '/builder'
     | '/my-maps'
@@ -112,6 +122,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/changelog'
     | '/explore'
     | '/builder'
     | '/my-maps'
@@ -123,6 +134,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/auth'
+    | '/changelog'
     | '/explore'
     | '/_authenticated/builder'
     | '/_authenticated/my-maps'
@@ -135,6 +147,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
+  ChangelogRoute: typeof ChangelogRoute
   ExploreRoute: typeof ExploreRoute
   MapIdRoute: typeof MapIdRoute
   PremadeSlugRoute: typeof PremadeSlugRoute
@@ -147,6 +160,13 @@ declare module '@tanstack/react-router' {
       path: '/explore'
       fullPath: '/explore'
       preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/changelog': {
+      id: '/changelog'
+      path: '/changelog'
+      fullPath: '/changelog'
+      preLoaderRoute: typeof ChangelogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -226,6 +246,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
+  ChangelogRoute: ChangelogRoute,
   ExploreRoute: ExploreRoute,
   MapIdRoute: MapIdRoute,
   PremadeSlugRoute: PremadeSlugRoute,
