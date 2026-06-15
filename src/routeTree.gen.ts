@@ -9,38 +9,167 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PremadeSlugRouteImport } from './routes/premade.$slug'
+import { Route as MapIdRouteImport } from './routes/map.$id'
+import { Route as AuthenticatedMyMapsRouteImport } from './routes/_authenticated/my-maps'
+import { Route as AuthenticatedBuilderRouteImport } from './routes/_authenticated/builder'
 
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PremadeSlugRoute = PremadeSlugRouteImport.update({
+  id: '/premade/$slug',
+  path: '/premade/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapIdRoute = MapIdRouteImport.update({
+  id: '/map/$id',
+  path: '/map/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedMyMapsRoute = AuthenticatedMyMapsRouteImport.update({
+  id: '/my-maps',
+  path: '/my-maps',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedBuilderRoute = AuthenticatedBuilderRouteImport.update({
+  id: '/builder',
+  path: '/builder',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/explore': typeof ExploreRoute
+  '/builder': typeof AuthenticatedBuilderRoute
+  '/my-maps': typeof AuthenticatedMyMapsRoute
+  '/map/$id': typeof MapIdRoute
+  '/premade/$slug': typeof PremadeSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/explore': typeof ExploreRoute
+  '/builder': typeof AuthenticatedBuilderRoute
+  '/my-maps': typeof AuthenticatedMyMapsRoute
+  '/map/$id': typeof MapIdRoute
+  '/premade/$slug': typeof PremadeSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/explore': typeof ExploreRoute
+  '/_authenticated/builder': typeof AuthenticatedBuilderRoute
+  '/_authenticated/my-maps': typeof AuthenticatedMyMapsRoute
+  '/map/$id': typeof MapIdRoute
+  '/premade/$slug': typeof PremadeSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/explore'
+    | '/builder'
+    | '/my-maps'
+    | '/map/$id'
+    | '/premade/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/explore'
+    | '/builder'
+    | '/my-maps'
+    | '/map/$id'
+    | '/premade/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/about'
+    | '/auth'
+    | '/explore'
+    | '/_authenticated/builder'
+    | '/_authenticated/my-maps'
+    | '/map/$id'
+    | '/premade/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
+  ExploreRoute: typeof ExploreRoute
+  MapIdRoute: typeof MapIdRoute
+  PremadeSlugRoute: typeof PremadeSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +177,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/premade/$slug': {
+      id: '/premade/$slug'
+      path: '/premade/$slug'
+      fullPath: '/premade/$slug'
+      preLoaderRoute: typeof PremadeSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/map/$id': {
+      id: '/map/$id'
+      path: '/map/$id'
+      fullPath: '/map/$id'
+      preLoaderRoute: typeof MapIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/my-maps': {
+      id: '/_authenticated/my-maps'
+      path: '/my-maps'
+      fullPath: '/my-maps'
+      preLoaderRoute: typeof AuthenticatedMyMapsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/builder': {
+      id: '/_authenticated/builder'
+      path: '/builder'
+      fullPath: '/builder'
+      preLoaderRoute: typeof AuthenticatedBuilderRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBuilderRoute: typeof AuthenticatedBuilderRoute
+  AuthenticatedMyMapsRoute: typeof AuthenticatedMyMapsRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBuilderRoute: AuthenticatedBuilderRoute,
+  AuthenticatedMyMapsRoute: AuthenticatedMyMapsRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
+  ExploreRoute: ExploreRoute,
+  MapIdRoute: MapIdRoute,
+  PremadeSlugRoute: PremadeSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
